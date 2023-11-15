@@ -53,11 +53,10 @@ class SpamDetectionModel(pl.LightningModule):
             y = data['spam']
 
             # Use stratified sampling to split the data
+            X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
             if split_name == 'train':
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
                 df = pd.DataFrame({'messageBody': X_train, 'spam': y_train})
             elif split_name == 'test':
-                X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, stratify=y, random_state=42)
                 df = pd.DataFrame({'messageBody': X_test, 'spam': y_test})
             else:
                 raise ValueError("Invalid split_name. Use 'train' or 'test'.")
